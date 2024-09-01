@@ -1,112 +1,55 @@
-import Image from "next/image";
+"use client";
+
+import { useState } from "react";
+import { BellBotState, initialBellBotState } from "@/app/types";
+import Grid from "@/app/components/Grid";
+import CallToAction from "@/app/components/CallToAction";
+import RobotController from "@/app/components/RobotController";
 
 export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+  const [bellBotState, setBellBotState] =
+    useState<BellBotState>(initialBellBotState);
 
-      <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+  return (
+    <main className="flex min-h-screen flex-col items-center md:flex-row bg-background">
+      <div className="mt-4 md:w-1/2 w-full flex flex-col items-center">
+        <Grid bellBotState={bellBotState} />
+        <div className="h-16">
+          {/* Setting a fixed height prevents layout shift */}
+          {bellBotState.error && (
+            <div className="bg-backgroundAlt w-fit">
+              <p
+                role="alert"
+                aria-live="assertive"
+                className="mt-4 p-2 text-hero rounded"
+              >
+                {bellBotState.error}
+              </p>
+            </div>
+          )}
+        </div>
+        <RobotController
+          bellBotState={bellBotState}
+          setBellBotState={setBellBotState}
         />
       </div>
-
-      <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <div className="md:w-1/2">
+        <div className="flex items-end p-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 99 58"
+            className="fill-current h-11 xl:pointer-fine:h-16"
+          >
+            <path d="M11.9 49.6c-2.1 0-4.2-.7-5.8-2.2A8.2 8.2 0 0 1 3 41.6c0-.2 0-.4-.1-.6V24.7s4.1 0 4.1 3.7v4.7l.6-.3c.1 0 .1-.1.1-.1.1 0 .2-.1.2-.1a8.2 8.2 0 0 1 4.2-1.1h.4c1.9.1 3.5.6 5 1.7 2.1 1.6 3.3 3.6 3.7 6 .3 2.1 0 4.1-1 5.8-1.5 2.5-3.5 4-6.2 4.5-.8 0-1.5.1-2.1.1zm.2-14.3c-.3 0-.6 0-.9.1-2.6.3-4.2 2.4-4.2 5v.4c0 1.5.6 2.7 1.7 3.6.9.8 2.2 1.3 3.4 1.3.9 0 1.9-.3 2.7-.7 1.9-1.1 2.7-2.9 2.4-5.2-.3-2.2-2.1-4.5-5.1-4.5zM69.1 49.6c-2.4 0-4.7-.9-6.5-2.7a8.78 8.78 0 0 1-2.7-6c-.1-2.5.7-4.9 2.5-6.7 1.8-1.8 4.1-2.9 6.7-2.9 5 0 9.2 4.1 9.2 9.1 0 2.4-.9 4.6-2.6 6.4a9.13 9.13 0 0 1-6.1 2.8h-.5zm.1-14.3c-.3 0-.6 0-1 .1a5.1 5.1 0 0 0-4.3 5.2v.4c.1 2.8 2.3 4.9 5.1 4.9.9 0 1.9-.3 2.7-.7 1.9-1.1 2.6-2.9 2.3-5.2-.1-2.5-2-4.7-4.8-4.7zM40.2 24.7v24.6h4.3V28.4c-.1-3.6-4.3-3.7-4.3-3.7zM46.4 24.7v24.6h4.3V28.4c0-3.9-4.3-3.7-4.3-3.7z"></path>
+            <path d="M52.6 49.3v-2.7-6.4c0-1.4.1-2.9.7-4.4.9-2.1 2.5-3.3 4.7-4 1.8-.5 3.4-.4 3.4-.4v3.9s-1 0-2 .3c-1.4.4-2.3 1.3-2.5 2.8-.1.6-.2 1.4-.2 2.2v8.7h-4.1zM79.9 51.7c1.8 0 2.3.9 2.7 1.3.6.5 1.4.8 2.1.8 2.3 0 4.1-2.1 4.1-4.1v-.9c-1 .6-2.1.8-3.2.8-4.1 0-7.3-3.4-7.3-7.6V31.6h4.1v10.2c0 1.9 1.5 3.6 3.2 3.6 1.9 0 3.2-1.6 3.2-3.6v-6.5c0-3.7 4.1-3.7 4.1-3.7v18c0 4.2-3.1 8.1-8.2 8.1-3.1 0-5.9-1.8-7.1-4.7-.4-.8-.5-1.4-.5-1.4s1.3.1 2.8.1zM30.3 45.9c-1.7 0-3.1-.8-4-2l13-4.6c-.6-3-1.8-4.9-3.6-6.2a9.3 9.3 0 0 0-7-1.5c-.6.1-1 .2-1.6.4a8.96 8.96 0 0 0-5.8 9.3 9 9 0 0 0 3.2 6.2c1.8 1.5 4 2.2 6.3 2.2 1 0 1.9-.2 2.9-.6 3.7-1.3 5.4-4.1 5.8-6.7h-2.4c-1.5 0-2.1 1-2.5 1.4a5.94 5.94 0 0 1-4.3 2.1zm-1.7-10.3c.1 0 .1 0 .2-.1H29.1c.4-.1.8-.2 1.3-.2.9 0 1.8.3 2.6.7.4.2.7.5 1 .8V37.1l.4.4-9.2 3.2v-.5c.1-2.2 1.4-3.9 3.4-4.6zM75.6 5.5c-.7 0-1.3.6-1.3 1.3 0 .7.7 1.4 1.5 1.2.3 1.1.9 2.1 1.8 2.8l.4.2.4-.3c.7-.6 1.4-1.7 1.7-2.8h.3c.7 0 1.3-.6 1.3-1.3s-.7-1.2-1.4-1.2c-.8 0-1.3.6-1.3 1.3 0 .9-.5 2.1-1.1 2.9-.6-.7-1-1.8-1.1-2.9.1-.6-.5-1.2-1.2-1.2zm16.5 11.6c-2.5-6.2-6.1-8-7.6-8.6.1-.4.1-.7.1-1.2 0-3.6-3-6.5-6.6-6.5-3.5 0-6.3 2.8-6.8 6.4-.7 8.7 5 13.5 7.8 15.7 1.6 1.2 2.4 2.1 1.5 3.6-.6.8-1.2 2-1.8 2.2-1.6.3-2.1 1.3-2.1 1.3H78c1.8 0 2.3-.1 4.1-3 1.7-2.9-1-4.5-2.1-5.4-2.8-2.1-8-6.4-7.3-14.2v-.1c.3-3 2.5-5.2 5.4-5.2a5.16 5.16 0 0 1 3.7 8.8c-.9 1-2.2 1.5-3.6 1.5-.5 0-.9-.1-1.3-.2-1.4-.4-2 .6-2 .6l-.1.1.1.1c.9.6 2.2.9 3.3.9 1.8 0 3.4-.6 4.6-1.9.6-.6 1.1-1.3 1.4-2 1.2.5 4.4 2.1 6.7 7.7.6 1.4 1.1 2.8 1.6 4-1.8 0-8.1-.2-11.2-5.1-.8-1.3-2.1-1-2.1-1 3.2 7.7 12.3 7.5 14 7.6.8 2 1.5 3.6 1.8 4.5-.7 0-2.1-.3-3.7-1.7a7.11 7.11 0 0 0-5.1-1.9l-4 6.3s1.9 0 2.7-1.2l2.2-3.5c1.1.1 2.2.6 3.3 1.5 2.1 1.7 3.4 1.9 4.7 1.9 1.2.1 1.9-.3 1.9-.3s-2.4-5.6-4.9-11.7z"></path>
+          </svg>
+          <h1>Bellbot</h1>
+        </div>
+        <div className="px-4">
+          <p className="pb-2">{bellBotState.message}</p>
+          <p>{bellBotState.instructions}</p>
+        </div>
+        <CallToAction />
       </div>
     </main>
   );
